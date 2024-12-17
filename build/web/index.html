@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="ระบบลงเวลาและจัดการสินค้า">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Check App">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Check App</title>
+  <link rel="manifest" href="manifest.json">
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    const serviceWorkerVersion = "1929837347";
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
+  
+  <style>
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+    .loader {
+      border: 8px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 8px solid #2196F3;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div id="loading" class="loading">
+    <div class="loader"></div>
+  </div>
+
+  <script>
+    window.addEventListener('load', function() {
+      // ดักจับข้อผิดพลาดทั้งหมด
+      window.onerror = function(message, source, lineno, colno, error) {
+        console.error('Error:', message, 'Source:', source, 'Line:', lineno);
+      };
+
+      var loadingIndicator = document.getElementById('loading');
+
+      // ตรวจสอบว่ามี flutter.js หรือไม่
+      if (typeof _flutter === 'undefined') {
+        console.error('Flutter.js is not loaded');
+        loadingIndicator.innerHTML = '<p>Error: Could not load Flutter application</p>';
+        return;
+      }
+
+      try {
+        _flutter.loader.loadEntrypoint({
+          serviceWorker: {
+            serviceWorkerVersion: serviceWorkerVersion,
+          },
+          onEntrypointLoaded: async function(engineInitializer) {
+            try {
+              let appRunner = await engineInitializer.initializeEngine({
+                hostElement: document.querySelector('#flutter_app'),
+                renderer: 'html'
+              });
+              await appRunner.runApp();
+            } catch (e) {
+              console.error('Error initializing Flutter app:', e);
+              loadingIndicator.innerHTML = '<p>Error: Could not initialize Flutter application</p>';
+            }
+            loadingIndicator.remove();
+          }
+        });
+      } catch (e) {
+        console.error('Error loading Flutter app:', e);
+        loadingIndicator.innerHTML = '<p>Error: Could not load Flutter application</p>';
+      }
+    });
+  </script>
+</body>
+</html>
