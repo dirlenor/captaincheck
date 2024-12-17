@@ -89,26 +89,6 @@ class _DashboardPageState extends State<DashboardPage> {
                               ),
                             ],
                           ),
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(15),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.1),
-                                  spreadRadius: 2,
-                                  blurRadius: 5,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: Icon(
-                              Icons.notifications_outlined,
-                              color: Colors.grey[800],
-                            ),
-                          ),
                         ],
                       ),
                       const SizedBox(height: 25),
